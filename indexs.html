@@ -3,281 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Game Kuis Waktu Seru</title>
+    <title>Ujian Kelas 10 - 50 Soal</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f4f8;
-            margin: 0;
-        }
-        .game-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-        }
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        #timer {
-            font-size: 2em;
+        /* CSS Sederhana untuk tampilan */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .timer { 
+            position: fixed; 
+            top: 10px; 
+            right: 10px; 
+            padding: 10px; 
+            background-color: #f00; 
+            color: white; 
+            font-size: 24px; 
             font-weight: bold;
-            color: #e74c3c;
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 2px solid #e74c3c;
-            border-radius: 8px;
-            display: inline-block;
+            border-radius: 5px;
         }
-        #question-area {
-            font-size: 1.2em;
-            margin-bottom: 25px;
-            color: #34495e;
-            min-height: 50px; /* Jaga agar kotak tidak goyah */
+        .soal { 
+            margin-bottom: 20px; 
+            padding: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
         }
-        .options-container {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .option-button {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-        .option-button:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        .option-button:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
-        }
-        #score-display {
-            font-size: 1.1em;
-            color: #27ae60;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        #feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            min-height: 20px;
-        }
-        #start-button, #restart-button {
-            background-color: #2ecc71;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border-radius: 10px;
-        }
-        .hidden {
-            display: none;
-        }
+        .soal-nomor { font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <h2>⏱️ Kuis Belajar: Time Attack!</h2>
+    <div class="timer">
+        Sisa Waktu: <span id="countdown">00:09</span>
+    </div>
+
+    <h1>Ujian Akhir Semester - Kelas 10</h1>
+    <hr>
     
-    <div id="start-screen">
-        <p>Uji kecepatan dan pengetahuanmu! Kamu punya 10 detik untuk menjawab setiap soal.</p>
-        <button id="start-button" onclick="startGame()">Mulai Game</button>
-    </div>
+    <form id="quizForm">
+        <div class="soal" id="soal-1">
+            <p class="soal-nomor">1. Apa ibukota negara Indonesia?</p>
+            <input type="radio" id="q1a" name="q1" value="A">
+            <label for="q1a">A. Surabaya</label><br>
+            <input type="radio" id="q1b" name="q1" value="B">
+            <label for="q1b">B. Bandung</label><br>
+            <input type="radio" id="q1c" name="q1" value="C">
+            <label for="q1c">C. Jakarta</label><br>
+            <input type="radio" id="q1d" name="q1" value="D">
+            <label for="q1d">D. Yogyakarta</label><br>
+        </div>
 
-    <div id="quiz-screen" class="hidden">
-        <div id="timer">10</div>
-        <div id="question-area"></div>
-        <div class="options-container" id="options-container"></div>
-        <div id="feedback"></div>
-        <div id="score-display">Skor: 0</div>
-    </div>
+        <div class="soal" id="soal-50">
+            <p class="soal-nomor">50. Soal terakhir tentang materi kelas 10?</p>
+            <input type="radio" id="q50a" name="q50" value="A">
+            <label for="q50a">A. Pilihan A</label><br>
+            <input type="radio" id="q50b" name="q50" value="B">
+            <label for="q50b">B. Pilihan B</label><br>
+            <input type="radio" id="q50c" name="q50" value="C">
+            <label for="q50c">C. Pilihan C</label><br>
+            <input type="radio" id="q50d" name="q50" value="D">
+            <label for="q50d">D. Pilihan D</label><br>
+        </div>
+        
+        <br>
+        <button type="submit">Kirim Jawaban</button>
+    </form>
 
-    <div id="result-screen" class="hidden">
-        <h3>🎉 Game Selesai!</h3>
-        <p>Total Skor Anda:</p>
-        <div id="final-score" style="font-size: 2.5em; color: #f39c12; margin: 10px 0;">0</div>
-        <button id="restart-button" onclick="startGame()">Main Lagi</button>
-    </div>
-</div>
+    <script>
+        const totalSeconds = 9; // Batas waktu 9 detik
+        let timeRemaining = totalSeconds;
+        const countdownDisplay = document.getElementById('countdown');
+        const form = document.getElementById('quizForm');
 
-<script>
-    const questions = [
-        {
-            q: "Siapakah pendiri Microsoft?",
-            options: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Jeff Bezos"],
-            answer: "Bill Gates"
-        },
-        {
-            q: "Berapakah jumlah sisi pada heksagon?",
-            options: ["Lima", "Enam", "Tujuh", "Delapan"],
-            answer: "Enam"
-        },
-        {
-            q: "Apa ibukota Jepang?",
-            options: ["Seoul", "Beijing", "Tokyo", "Bangkok"],
-            answer: "Tokyo"
-        },
-        {
-            q: "Zat yang menghasilkan oksigen pada fotosintesis adalah...",
-            options: ["Karbon Dioksida", "Air", "Klorofil", "Glukosa"],
-            answer: "Air"
-        },
-        {
-            q: "Planet terdekat dari Matahari adalah...",
-            options: ["Mars", "Bumi", "Venus", "Merkurius"],
-            answer: "Merkurius"
-        }
-    ];
+        function updateCountdown() {
+            const seconds = timeRemaining % 60;
+            const minutes = Math.floor(timeRemaining / 60);
+            
+            // Format waktu (misal: 00:09)
+            countdownDisplay.textContent = 
+                String(minutes).padStart(2, '0') + ":" + 
+                String(seconds).padStart(2, '0');
 
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let timeLeft = 10;
-    let timerInterval;
-
-    const startScreen = document.getElementById('start-screen');
-    const quizScreen = document.getElementById('quiz-screen');
-    const resultScreen = document.getElementById('result-screen');
-    const timerDisplay = document.getElementById('timer');
-    const questionArea = document.getElementById('question-area');
-    const optionsContainer = document.getElementById('options-container');
-    const scoreDisplay = document.getElementById('score-display');
-    const feedbackDiv = document.getElementById('feedback');
-    const finalScoreDisplay = document.getElementById('final-score');
-
-    function startGame() {
-        // Reset game state
-        currentQuestionIndex = 0;
-        score = 0;
-        scoreDisplay.textContent = 'Skor: 0';
-        feedbackDiv.textContent = '';
-
-        // Tampilkan layar kuis
-        startScreen.classList.add('hidden');
-        resultScreen.classList.add('hidden');
-        quizScreen.classList.remove('hidden');
-
-        loadQuestion();
-    }
-
-    function startTimer() {
-        clearInterval(timerInterval); // Bersihkan timer sebelumnya
-        timeLeft = 10;
-        timerDisplay.textContent = timeLeft;
-        timerDisplay.style.color = '#e74c3c'; // Merah
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timerDisplay.textContent = timeLeft;
-
-            // Peringatan waktu
-            if (timeLeft <= 3) {
-                timerDisplay.style.color = '#f39c12'; // Oranye
-            } else {
-                timerDisplay.style.color = '#e74c3c';
-            }
-
-            if (timeLeft <= 0) {
+            if (timeRemaining <= 0) {
                 clearInterval(timerInterval);
-                checkAnswer(null); // Jawaban dianggap salah (waktu habis)
+                alert("Waktu Habis! Jawaban Anda otomatis dikirim.");
+                // Mengirim formulir secara otomatis saat waktu habis
+                form.submit(); 
+            } else {
+                timeRemaining--;
             }
-        }, 1000);
-    }
-
-    function loadQuestion() {
-        if (currentQuestionIndex >= questions.length) {
-            endGame();
-            return;
         }
 
-        const qData = questions[currentQuestionIndex];
-        
-        questionArea.textContent = `${currentQuestionIndex + 1}. ${qData.q}`;
-        optionsContainer.innerHTML = '';
-        feedbackDiv.textContent = ''; // Bersihkan feedback
+        // Jalankan fungsi hitung mundur setiap 1 detik
+        const timerInterval = setInterval(updateCountdown, 1000);
 
-        // Buat tombol opsi
-        qData.options.forEach(option => {
-            const button = document.createElement('button');
-            button.classList.add('option-button');
-            button.textContent = option;
-            button.onclick = () => checkAnswer(option);
-            optionsContainer.appendChild(button);
+        // Pastikan hitungan mundur ditampilkan segera saat halaman dimuat
+        updateCountdown(); 
+        
+        // Pencegahan pengiriman form manual agar timer tidak terganggu (opsional)
+        form.addEventListener('submit', function(e) {
+            clearInterval(timerInterval); // Hentikan timer saat dikirim
+            alert("Jawaban telah dikirim!");
+            // Lakukan pengiriman data ke server di sini (misalnya: e.preventDefault() kemudian fetch/AJAX)
+            // Untuk contoh ini, kita biarkan form.submit() berjalan
         });
-
-        startTimer();
-    }
-
-    function checkAnswer(selectedOption) {
-        clearInterval(timerInterval);
-        const qData = questions[currentQuestionIndex];
-        const allButtons = optionsContainer.querySelectorAll('.option-button');
-
-        // Nonaktifkan semua tombol setelah menjawab
-        allButtons.forEach(btn => btn.disabled = true);
-
-        let isCorrect = (selectedOption === qData.answer);
-        
-        if (selectedOption === null) {
-            feedbackDiv.innerHTML = `<span style="color: red;">❌ Waktu Habis!</span> Jawaban: ${qData.answer}`;
-        } else if (isCorrect) {
-            score += 100; // Tambah skor
-            feedbackDiv.innerHTML = `<span style="color: green;">✅ BENAR!</span>`;
-            
-            // Beri visual pada tombol yang benar
-            allButtons.forEach(btn => {
-                if (btn.textContent === selectedOption) {
-                    btn.style.backgroundColor = '#27ae60'; // Hijau
-                }
-            });
-        } else {
-            feedbackDiv.innerHTML = `<span style="color: red;">❌ SALAH.</span> Jawaban yang benar: ${qData.answer}`;
-            
-            // Beri visual pada tombol yang salah dan yang benar
-            allButtons.forEach(btn => {
-                if (btn.textContent === selectedOption) {
-                    btn.style.backgroundColor = '#c0392b'; // Merah untuk pilihan user
-                }
-                if (btn.textContent === qData.answer) {
-                    btn.style.border = '2px solid #27ae60'; // Highlight jawaban benar
-                }
-            });
-        }
-
-        scoreDisplay.textContent = `Skor: ${score}`;
-        
-        // Pindah ke soal berikutnya setelah jeda visual
-        setTimeout(() => {
-            currentQuestionIndex++;
-            loadQuestion();
-        }, 1500); 
-    }
-
-    function endGame() {
-        quizScreen.classList.add('hidden');
-        resultScreen.classList.remove('hidden');
-        finalScoreDisplay.textContent = score;
-    }
-
-    // Initialize the game screen to show start button first
-    document.addEventListener('DOMContentLoaded', () => {
-        startScreen.classList.remove('hidden');
-    });
-</script>
+    </script>
 
 </body>
 </html>
-
